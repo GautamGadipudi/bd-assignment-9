@@ -1,3 +1,5 @@
+from util import get_args
+
 import timeit
 from pyspark.sql import SparkSession
 
@@ -40,9 +42,11 @@ spark = SparkSession \
     .config("spark.some.config.option", "some-value") \
     .getOrCreate()
 
-all_principals = spark.read.csv("C:/Users/14085/Downloads/title.principals.tsv.gz", header=True, sep="\t")
-all_titles = spark.read.csv("C:/Users/14085/Downloads/title.basics.tsv.gz", header=True, sep="\t")
-all_members = spark.read.csv("C:/Users/14085/Downloads/name.basics.tsv.gz", header=True, sep="\t")
+member_file, principal_file, title_file = get_args()
+
+all_principals = spark.read.csv(principal_file, header=True, sep="\t")
+all_titles = spark.read.csv(title_file, header=True, sep="\t")
+all_members = spark.read.csv(member_file, header=True, sep="\t")
 
 movies_2014 = \
     all_titles \

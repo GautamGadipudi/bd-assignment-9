@@ -1,0 +1,55 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Q2",
+            "type": "python",
+            "request": "launch",
+            "program": "q2.py",
+            "console": "integratedTerminal",
+            "args": [
+                "C:/Users/14085/Downloads/name.basics.tsv.gz",
+                "C:/Users/14085/Downloads/title.principals.tsv.gz",
+                "C:/Users/14085/Downloads/title.basics.tsv.gz"
+            ]
+        },
+        {
+            "name": "Q1",
+            "type": "python",
+            "request": "launch",
+            "program": "q1.py",
+            "console": "integratedTerminal",
+            "args": [
+                "C:/Users/14085/Downloads/name.basics.tsv.gz",
+                "C:/Users/14085/Downloads/title.principals.tsv.gz",
+                "C:/Users/14085/Downloads/title.basics.tsv.gz"
+            ]
+        },
+        {
+            "name": "Q3",
+            "type": "python",
+            "request": "launch",
+            "program": "q3.py",
+            "console": "integratedTerminal",
+            "args": [
+                "C:/Users/14085/Downloads/name.basics.tsv.gz",
+                "C:/Users/14085/Downloads/title.principals.tsv.gz",
+                "C:/Users/14085/Downloads/title.basics.tsv.gz"
+            ]
+        },
+        {
+            "name": "Q4",
+            "type": "python",
+            "request": "launch",
+            "program": "q4.py",
+            "console": "integratedTerminal",
+            "args": [
+                "C:/Users/14085/Downloads/name.basics.tsv.gz",
+                "C:/Users/14085/Downloads/title.principals.tsv.gz"
+            ]
+        }
+    ]
+}

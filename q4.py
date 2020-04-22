@@ -1,3 +1,5 @@
+from util import get_args
+
 import timeit
 from pyspark.sql import SparkSession
 from pyspark.sql.types import ArrayType, StringType
@@ -30,21 +32,23 @@ spark = SparkSession \
     .config("spark.some.config.option", "some-value") \
     .getOrCreate()
 
-all_principals = spark.read.csv("C:/Users/14085/Downloads/title.principals.tsv.gz", header=True, sep="\t")
-all_members = spark.read.csv("C:/Users/14085/Downloads/name.basics.tsv.gz", header=True, sep="\t")
+member_file, principal_file = get_args(True)
 
-all_principals = \
+all_principals = spark.read.csv(principal_file, header=True, sep="\t")
+all_members = spark.read.csv(member_file, header=True, sep="\t")
+
+all_principals2 = \
     all_principals \
         .withColumn(
             "characters2",
             regexp_replace(all_principals.characters, "[\[\]]", "")
         )
 
-all_principals = \
-    all_principals \
+all_principals3 = \
+    all_principals2 \
         .withColumn(
             "characters_array",
-            split(all_principals.characters2, ",\s*").cast(ArrayType(StringType()))
+            split(all_principals2.characters2, ",\s*").cast(ArrayType(StringType()))
         )
 
 alive_members = \
@@ -52,18 +56,18 @@ alive_members = \
         .filter(all_members.deathYear == "\\N")
 
 result = \
-    all_principals \
+    all_principals3 \
         .filter(
-            (all_principals.category == 'actor') &
+            (all_principals3.category == 'actor') &
             (
-                (array_contains(all_principals.characters_array, "Jesus")) |
-                (array_contains(all_principals.characters_array, "Christ")) |
-                (array_contains(all_principals.characters_array, "Jesus Christ"))
+                (array_contains(all_principals3.characters_array, "Christ")) |
+                (array_contains(all_principals3.characters_array, "Jesus")) |
+                (array_contains(all_principals3.characters_array, "Jesus Christ"))
             )
         ) \
         .join(
             alive_members,
-            alive_members.nconst == all_principals.nconst,
+            alive_members.nconst == all_principals3.nconst,
             "inner"
         ) \
         .select(

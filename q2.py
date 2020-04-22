@@ -1,7 +1,9 @@
+from util import get_args
+
 import timeit
 from pyspark.sql import SparkSession
 from pyspark.sql.types import ArrayType, StringType
-from pyspark.sql.functions import split, regexp_replace, array_contains
+import pyspark.sql.functions as f
 
 '''
 SELECT
@@ -35,20 +37,22 @@ spark = SparkSession \
     .config("spark.some.config.option", "some-value") \
     .getOrCreate()
 
-all_principals = spark.read.csv("C:/Users/14085/Downloads/title.principals.tsv.gz", header=True, sep="\t")
-all_titles = spark.read.csv("C:/Users/14085/Downloads/title.basics.tsv.gz", header=True, sep="\t")
-all_members = spark.read.csv("C:/Users/14085/Downloads/name.basics.tsv.gz", header=True, sep="\t")
+member_file, principal_file, title_file = get_args()
+
+all_principals = spark.read.csv(principal_file, header=True, sep="\t")
+all_titles = spark.read.csv(title_file, header=True, sep="\t")
+all_members = spark.read.csv(member_file, header=True, sep="\t")
 
 all_titles = all_titles.withColumn(
     "genres",
-    split(all_titles.genres, ",")
+    f.split(all_titles.genres, ",")
 )
 
 talkshows_2017 = \
     all_titles \
         .filter(
             (all_titles.startYear == 2017) &
-            (array_contains(all_titles.genres, "Talk-Show"))
+            (f.array_contains(all_titles.genres, "Talk-Show"))
         )
 
 filtered_members = \
@@ -56,6 +60,28 @@ filtered_members = \
         .filter(all_members.primaryName.like("%Gill%"))
 
 result = \
-    
+    all_principals \
+        .filter(all_principals.category == 'producer') \
+        .join(
+            talkshows_2017,
+            talkshows_2017.tconst == all_principals.tconst,
+            "inner"
+        ) \
+        .join(
+            filtered_members,
+            filtered_members.nconst == all_principals.nconst,
+            "inner"
+        ) \
+        .groupBy(all_principals.nconst, filtered_members.primaryName) \
+        .agg(f.count(all_principals.tconst).alias("ts_count"))
+        
 
-print(filtered_members.show(30, False))
+max_count = \
+    result \
+        .agg(f.max(result.ts_count).alias("max_ts_count"))
+
+start = timeit.default_timer()
+print(max_count.show())
+stop = timeit.default_timer()
+
+print(f'Time: {str(stop - start)}')

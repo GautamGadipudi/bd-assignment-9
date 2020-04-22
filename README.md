@@ -1,6 +1,11 @@
 # bd-assignment-9
 
 ## Question 1
+Run the following in the root of the repo:
+```bash
+python3 q1.py {members_zipped_file} {principals_zipped_file} {titles_zipped_file}
+```
+
 Time taken: 1381.2099928999999 secs
 
 Sample results: 
@@ -29,6 +34,15 @@ Sample results:
 |nm0740019|    Philippe Rondest|
 
 ## Question 2
+```bash
+python3 q2.py {members_zipped_file} {principals_zipped_file} {titles_zipped_file}
+```
+
+## Question 3
+```bash
+python3 q3.py {members_zipped_file} {principals_zipped_file} {titles_zipped_file}
+```
+
 Time taken: 76.6925178 secs
 
 Sample results: 
@@ -55,3 +69,8 @@ Sample results:
 |nm0668736|       Patrick Peach|
 |nm0684350|    Daphne Pinkerson|
 |nm0701403|Pyarelal Ramprasa...|
+
+## Question 4
+```bash
+python3 q4.py {members_zipped_file} {principals_zipped_file}
+```
