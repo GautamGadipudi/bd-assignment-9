@@ -38,6 +38,14 @@ Sample results:
 python3 q2.py {members_zipped_file} {principals_zipped_file} {titles_zipped_file}
 ```
 
+Time taken: 96.207425 secs
+
+Sample results: 
+
+|    nconst|     primaryName|ts_count|
+|----------|----------------|--------|
+| nm8230849|       Ryan Gill|      79|
+
 ## Question 3
 ```bash
 python3 q3.py {members_zipped_file} {principals_zipped_file} {titles_zipped_file}
@@ -74,3 +82,30 @@ Sample results:
 ```bash
 python3 q4.py {members_zipped_file} {principals_zipped_file}
 ```
+
+Time taken: 76.6925178 secs
+
+Sample results:
+
+|    nconst|         primaryName|
+|----------|--------------------|
+| nm0328601|  Maurício Gonçalves|
+| nm0397721|       Kevin Howarth|
+| nm0405966|     Alexander Hörbe|
+| nm0679242|        Rolando Peña|
+|nm10189882|        Kenneth Wong|
+|nm10968055|        Ron Ferguson|
+|nm11333143|    Christian Andreu|
+| nm2414241|     Skylar T. Adams|
+| nm2452417|           Max Block|
+| nm3583367|   Christian Brooker|
+| nm3953712|         Oscar Jones|
+| nm5613067|   Christen Clifford|
+| nm5724504|Tre Copeland-Will...|
+| nm6739304|          Marc Mills|
+| nm8486074|      Michael Draper|
+| nm9034091|Christian Rain Ca...|
+| nm0000516|          Lee Majors|
+| nm0049158|         Kuno Bakker|
+| nm0081625|     Stéphane Bierry|
+| nm0229923|      Michael Dobson|

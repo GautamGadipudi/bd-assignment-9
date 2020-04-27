@@ -37,37 +37,37 @@ member_file, principal_file = get_args(True)
 all_principals = spark.read.csv(principal_file, header=True, sep="\t")
 all_members = spark.read.csv(member_file, header=True, sep="\t")
 
-all_principals2 = \
-    all_principals \
-        .withColumn(
-            "characters2",
-            regexp_replace(all_principals.characters, "[\[\]]", "")
-        )
+# all_principals2 = \
+#     all_principals \
+#         .withColumn(
+#             "characters2",
+#             regexp_replace(all_principals.characters, "[\[\]]", "")
+#         )
 
-all_principals3 = \
-    all_principals2 \
-        .withColumn(
-            "characters_array",
-            split(all_principals2.characters2, ",\s*").cast(ArrayType(StringType()))
-        )
+# all_principals3 = \
+#     all_principals2 \
+#         .withColumn(
+#             "characters_array",
+#             split(all_principals2.characters2, ",\s*").cast(ArrayType(StringType()))
+#         )
 
 alive_members = \
     all_members \
         .filter(all_members.deathYear == "\\N")
 
 result = \
-    all_principals3 \
+    all_principals \
         .filter(
-            (all_principals3.category == 'actor') &
+            (all_principals.category == 'actor') &
             (
-                (array_contains(all_principals3.characters_array, "Christ")) |
-                (array_contains(all_principals3.characters_array, "Jesus")) |
-                (array_contains(all_principals3.characters_array, "Jesus Christ"))
+                all_principals.characters.contains("Christ") |
+                all_principals.characters.contains("Jesus") |
+                all_principals.characters.contains("Jesus Christ")
             )
         ) \
         .join(
             alive_members,
-            alive_members.nconst == all_principals3.nconst,
+            alive_members.nconst == all_principals.nconst,
             "inner"
         ) \
         .select(

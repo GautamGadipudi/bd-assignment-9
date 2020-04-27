@@ -81,6 +81,7 @@ max_count = \
         .agg(f.max(result.ts_count).alias("max_ts_count"))
 
 start = timeit.default_timer()
+print(result.show())
 print(max_count.show())
 stop = timeit.default_timer()
 
